@@ -19,6 +19,7 @@ import {
   OverviewContainer,
   PriceRow,
 } from './BikeDetails.styles'
+import RentBike from 'components/RentBike'
 
 interface BikeDetailsProps {
   bike?: Bike
@@ -28,8 +29,8 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
   const rateByDay = bike?.rate || 0
   const rateByWeek = rateByDay * 7
 
-  const servicesFee = getServicesFee(rateByDay)
-  const total = rateByDay + servicesFee
+  // const servicesFee = getServicesFee(rateByDay)
+  // const total = rateByDay + servicesFee
 
   return (
     <div data-testid='bike-details-page'>
@@ -109,8 +110,8 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
             <BookingAddressMap />
           </Box>
         </DetailsContainer>
-
-        <OverviewContainer variant='outlined' data-testid='bike-overview-container'>
+        <RentBike rateByDay={rateByDay} />
+        {/* <OverviewContainer variant='outlined' data-testid='bike-overview-container'>
           <Typography variant='h2' fontSize={16} marginBottom={1.25}>
             Booking Overview
           </Typography>
@@ -152,7 +153,7 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
           >
             Add to booking
           </BookingButton>
-        </OverviewContainer>
+        </OverviewContainer> */}
       </Content>
     </div>
   )
