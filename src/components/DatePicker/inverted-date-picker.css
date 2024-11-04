@@ -1,0 +1,18 @@
+.rdp-day.rdp-today .rdp-day_button{
+    border-color: var(--rdp-accent-color);
+}
+
+.rdp-nav{
+    gap: 10px;
+}
+.rdp-button_next, .rdp-button_previous{
+    width: 52px;
+    height: 52px;
+    padding: 14px;
+    border: 1px solid var(--rdp-accent-color);
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
