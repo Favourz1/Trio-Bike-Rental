@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Divider, Link, Typography } from '@mui/material'
 import {
     BookingButton,
+    DatePickerWrapper,
     InfoIcon,
     OverviewContainer,
     PriceRow,
@@ -20,7 +21,12 @@ const RentBike = ({ rateByDay }: RentBikeProps) => {
     return (
         <div>
             <OverviewContainer variant='outlined' data-testid='bike-overview-container'>
-
+                <DatePickerWrapper>
+                    <Typography variant='h1' fontSize={24} marginBottom={1}>
+                        Select date and time
+                    </Typography>
+                    <DatePicker isInverted={true} />
+                </DatePickerWrapper>
                 <Typography variant='h2' fontSize={16} marginBottom={1.25}>
                     Booking Overview
                 </Typography>
