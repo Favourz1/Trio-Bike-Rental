@@ -12,6 +12,11 @@ import { debounce, getInitialAmountDataState } from './RentBike.utils'
 import DatePicker from 'components/DatePicker'
 import Bike from 'models/Bike'
 import apiClient from 'services/api'
+import Tooltip from '@mui/material/Tooltip';
+import { toast } from 'sonner';
+import axios, { AxiosError } from 'axios';
+
+
 
 interface RentBikeProps {
     bike?: Bike
@@ -41,8 +46,13 @@ const RentBike = ({ bike }: RentBikeProps) => {
                 dateTo: selectedDate.to.toISOString().split('T')[0]
             })
             setAmountData(response.data)
-        } catch (error) {
-            console.error('Error fetching bike amount:', error);
+        } catch (error: unknown) {
+            const errorMessage = axios.isAxiosError(error) && error.response?.data?.message
+                ? error.response.data.message
+                : 'Failed to fetch bike amount for selected date.';
+            // console.log(error);
+            console.error('Error fetching bike amount:', errorMessage);
+            toast.error(errorMessage);
         } finally {
             setIsLoadingAmount(false)
         }
@@ -78,7 +88,9 @@ const RentBike = ({ bike }: RentBikeProps) => {
                 <PriceRow marginTop={1.75} data-testid='bike-overview-single-price'>
                     <Box display='flex' alignItems='center'>
                         <Typography marginRight={1}>Subtotal</Typography>
-                        <InfoIcon fontSize='small' />
+                        <Tooltip title='Rental rate for selected days'>
+                            <InfoIcon fontSize='small' />
+                        </Tooltip>
                     </Box>
                     <Typography>{isLoadingAmount ? <CircularProgressIcon size={14} /> : amountData.rentAmount} €</Typography>
                 </PriceRow>
@@ -86,7 +98,9 @@ const RentBike = ({ bike }: RentBikeProps) => {
                 <PriceRow marginTop={1.5} data-testid='bike-overview-single-price'>
                     <Box display='flex' alignItems='center'>
                         <Typography marginRight={1}>Service Fee</Typography>
-                        <InfoIcon fontSize='small' />
+                        <Tooltip title='Service charge for your experience.'>
+                            <InfoIcon fontSize='small' />
+                        </Tooltip>
                     </Box>
 
                     <Typography> {isLoadingAmount ? <CircularProgressIcon size={14} /> : amountData.fee} €</Typography>
