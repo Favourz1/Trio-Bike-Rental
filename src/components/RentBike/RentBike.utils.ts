@@ -27,3 +27,8 @@ export const debounce = <F extends (...args: any[]) => any>(func: F, wait: numbe
             timeout = setTimeout(() => func(...args), wait);
         };
 };
+
+export const formatSelectedDate = (date: Date | string) => {
+                const dateObj = typeof date === 'string' ? new Date(date) : date;
+                return dateObj.toISOString().split('T')[0];
+};

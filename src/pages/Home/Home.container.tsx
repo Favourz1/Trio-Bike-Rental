@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import apiClient from 'services/api'
 import Home from './Home.component'
 import { BOILERPLATE_CANDIDATE_TOKEN } from 'config'
+import { Toaster } from 'sonner'
 
 
 const HomeContainer = () => {
@@ -19,7 +20,11 @@ const HomeContainer = () => {
 
 
 
-  return <Home appIsNotConfigured={!BOILERPLATE_CANDIDATE_TOKEN} bikes={bikes} />
+  return <>
+    <Toaster position="top-center" richColors closeButton />
+
+    <Home appIsNotConfigured={!BOILERPLATE_CANDIDATE_TOKEN} bikes={bikes} />
+  </>
 }
 
 export default HomeContainer

@@ -39,10 +39,36 @@ export const BookingButton = styled(Button)<ButtonProps>(({ theme }) => ({
   textTransform: 'none',
   color: theme.palette.common.white,
   fontWeight: 800,
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '0.625rem'
+}))
+
+export const HomePageLink = styled('a')<ButtonProps>(({ theme }) => ({
+  width: '100%',
+  borderRadius: 20,
+  padding: '18px 24px',
+  marginTop: 30,
+  textTransform: 'none',
+  color: theme.palette.common.white,
+  fontWeight: 800,
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '0.625rem',
+  textDecoration: 'none',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: theme.palette.primary.main,
 }))
 
 export const PriceRow = styled(Box)<BoxProps>(() => ({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
+}))
+export const ThankYouPageWrapper = styled(Box)<BoxProps>(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
   alignItems: 'center',
 }))
