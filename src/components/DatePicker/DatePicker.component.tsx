@@ -5,10 +5,11 @@ import { useTheme } from '@mui/material';
 
 interface DatePickerProps {
     isInverted?: boolean;
+    setExternalState?: React.Dispatch<React.SetStateAction<{ from: Date; to: Date }>>;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({ isInverted = false }) => {
-    const [selected, setSelected] = useState<Date>();
+const DatePicker: React.FC<DatePickerProps> = ({ isInverted = false, setExternalState }) => {
+    const [range, setRange] = useState<{ from: Date; to: Date }>({ from: new Date(), to: new Date() });
     const theme = useTheme();
 
     const customStyles = {
@@ -38,6 +39,8 @@ const DatePicker: React.FC<DatePickerProps> = ({ isInverted = false }) => {
     const today = new Date();
     const disabledDays = { before: today };
     const modifiers = {
+        start: range.from,
+        end: range.to,
         disabled: disabledDays,
     };
 
@@ -56,6 +59,16 @@ const DatePicker: React.FC<DatePickerProps> = ({ isInverted = false }) => {
                 weekStartsOn={0}
                 disabled={disabledDays}
                 modifiers={modifiers}
+                selected={range}
+                onSelect={(selectedDate) => {
+                    if (selectedDate) {
+                        console.log('Selected Date:', selectedDate);
+                        setRange(selectedDate as { from: Date; to: Date });
+                    }
+                    if (setExternalState) {
+                        setExternalState(selectedDate as { from: Date; to: Date });
+                    }
+                }}
             />
         </div>
     );

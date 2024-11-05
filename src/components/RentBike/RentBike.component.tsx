@@ -1,22 +1,61 @@
-import React from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Box, Divider, Link, Typography } from '@mui/material'
 import {
     BookingButton,
+    CircularProgressIcon,
     DatePickerWrapper,
     InfoIcon,
     OverviewContainer,
     PriceRow,
 } from './RentBike.styles'
-import { getServicesFee } from './RentBike.utils'
+import { debounce, getInitialAmountDataState } from './RentBike.utils'
 import DatePicker from 'components/DatePicker'
+import Bike from 'models/Bike'
+import apiClient from 'services/api'
 
 interface RentBikeProps {
-    rateByDay: number
+    bike?: Bike
+}
+type SelectedDateType = { from: Date; to: Date }
+type AmountDataType = {
+    rentAmount?: number;
+    fee?: number;
+    totalAmount?: number;
 }
 
-const RentBike = ({ rateByDay }: RentBikeProps) => {
-    const servicesFee = getServicesFee(rateByDay)
-    const total = rateByDay + servicesFee
+const RentBike = ({ bike }: RentBikeProps) => {
+
+    const [selectedDate, setSelectedDate] = useState<SelectedDateType>({ from: new Date(), to: new Date() });
+    const [amountData, setAmountData] = useState<AmountDataType>(getInitialAmountDataState(bike as Bike));
+    const [isLoadingAmount, setIsLoadingAmount] = useState<boolean>(false);
+
+
+    const getBikeAmount = useCallback(debounce(async () => {
+        try {
+            if (!bike) return;
+            setIsLoadingAmount(true)
+            const response = await apiClient.post('/bikes/amount', {
+                bikeId: bike?.id || 0,
+                userId: 1863, // Defaulting to this user on my candidate because no login api to create login UI and get dynamic id
+                dateFrom: selectedDate.from.toISOString().split('T')[0],
+                dateTo: selectedDate.to.toISOString().split('T')[0]
+            })
+            setAmountData(response.data)
+        } catch (error) {
+            console.error('Error fetching bike amount:', error);
+        } finally {
+            setIsLoadingAmount(false)
+        }
+    }, 500), [selectedDate, bike]);
+
+    useEffect(() => {
+        getBikeAmount();
+    }, [selectedDate, bike, getBikeAmount]);
+
+
+    console.log('bike')
+    console.log(bike)
+
 
     return (
         <div>
@@ -25,7 +64,10 @@ const RentBike = ({ rateByDay }: RentBikeProps) => {
                     <Typography variant='h1' fontSize={24} marginBottom={1}>
                         Select date and time
                     </Typography>
-                    <DatePicker isInverted={true} />
+                    <DatePicker
+                        isInverted={true}
+                        setExternalState={setSelectedDate}
+                    />
                 </DatePickerWrapper>
                 <Typography variant='h2' fontSize={16} marginBottom={1.25}>
                     Booking Overview
@@ -38,8 +80,7 @@ const RentBike = ({ rateByDay }: RentBikeProps) => {
                         <Typography marginRight={1}>Subtotal</Typography>
                         <InfoIcon fontSize='small' />
                     </Box>
-
-                    <Typography>{rateByDay} €</Typography>
+                    <Typography>{isLoadingAmount ? <CircularProgressIcon size={14} /> : amountData.rentAmount} €</Typography>
                 </PriceRow>
 
                 <PriceRow marginTop={1.5} data-testid='bike-overview-single-price'>
@@ -48,7 +89,7 @@ const RentBike = ({ rateByDay }: RentBikeProps) => {
                         <InfoIcon fontSize='small' />
                     </Box>
 
-                    <Typography>{servicesFee} €</Typography>
+                    <Typography> {isLoadingAmount ? <CircularProgressIcon size={14} /> : amountData.fee} €</Typography>
                 </PriceRow>
 
                 <PriceRow marginTop={1.75} data-testid='bike-overview-total'>
@@ -56,7 +97,7 @@ const RentBike = ({ rateByDay }: RentBikeProps) => {
                         Total
                     </Typography>
                     <Typography variant='h2' fontSize={24} letterSpacing={1}>
-                        {total} €
+                        {isLoadingAmount ? <CircularProgressIcon size={14} /> : amountData.totalAmount} €
                     </Typography>
                 </PriceRow>
 

@@ -104,13 +104,13 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
 
           <Box marginTop={3.25}>
             <Typography variant='h1' fontSize={24} fontWeight={800}>
-              Full adress after booking
+              Full address after booking
             </Typography>
 
             <BookingAddressMap />
           </Box>
         </DetailsContainer>
-        <RentBike rateByDay={rateByDay} />
+        <RentBike bike={bike} />
         {/* <OverviewContainer variant='outlined' data-testid='bike-overview-container'>
           <Typography variant='h2' fontSize={16} marginBottom={1.25}>
             Booking Overview

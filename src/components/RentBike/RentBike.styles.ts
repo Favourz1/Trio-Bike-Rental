@@ -8,6 +8,7 @@ import {
   styled,
 } from '@mui/material'
 import InfoOutlined from '@mui/icons-material/InfoOutlined'
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const DatePickerWrapper = styled(Box)<BoxProps>(() => ({
   display: 'flex',
@@ -15,9 +16,14 @@ export const DatePickerWrapper = styled(Box)<BoxProps>(() => ({
   marginBottom: 22
 }))
 
-
 export const InfoIcon = styled(InfoOutlined)(({ theme }) => ({
   color: theme.palette.grey[500],
+}))
+
+export const CircularProgressIcon = styled(CircularProgress)(({ theme }) => ({
+  color: 'currentColor',
+  width: '1em',
+  height: '1em'
 }))
 
 export const OverviewContainer = styled(Card)<CardProps>(({ theme }) => ({
