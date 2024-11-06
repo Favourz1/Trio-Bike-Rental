@@ -1,7 +1,7 @@
 import { Box, BoxProps, styled } from '@mui/material'
 
 export const Container = styled(Box)<BoxProps>(() => ({
-  position: 'relative',
+  // position: 'relative',
   textAlign: 'right',
   width: '100%',
   height: 400,

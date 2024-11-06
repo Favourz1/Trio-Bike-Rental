@@ -32,3 +32,21 @@ export const formatSelectedDate = (date: Date | string) => {
                 const dateObj = typeof date === 'string' ? new Date(date) : date;
                 return dateObj.toISOString().split('T')[0];
 };
+
+export function formatDateToDDMMYY(dateInput: Date | string) {
+    if (!dateInput) {
+        return '';
+    }
+    
+    const date = new Date(dateInput);
+    if (isNaN(date.getTime())) {
+        return '';
+    }
+
+    const day = date.getDate();
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear().toString().slice(-2);
+
+    return `${day}/${month}/${year}`;
+}

@@ -5,10 +5,11 @@ import { useTheme } from '@mui/material';
 
 interface DatePickerProps {
     isInverted?: boolean;
+    defaultDate?: { from: Date; to: Date };
     setExternalState?: React.Dispatch<React.SetStateAction<{ from: Date; to: Date }>>;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({ isInverted = false, setExternalState }) => {
+const DatePicker: React.FC<DatePickerProps> = ({ isInverted = false, defaultDate, setExternalState }) => {
     const [range, setRange] = useState<{ from: Date; to: Date }>({ from: new Date(), to: new Date() });
     const theme = useTheme();
 
@@ -25,7 +26,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ isInverted = false, setExternal
         '--rdp-range_middle-foreground-color': 'white',
         borderRadius: '40px',
         padding: '26px 24px 40px',
-        boxShadow: '0px 10px 70px 0px #00000033',
+        // boxShadow: '0px 10px 70px 0px #00000033',
     } as React.CSSProperties;
 
     React.useEffect(() => {
@@ -35,6 +36,18 @@ const DatePicker: React.FC<DatePickerProps> = ({ isInverted = false, setExternal
             });
         }
     }, [isInverted]);
+
+    React.useEffect(() => {
+        if (defaultDate) {
+            const { from, to } = defaultDate;
+            if (from instanceof Date && to instanceof Date) {
+                setRange(defaultDate);
+                if (setExternalState) {
+                    setExternalState(defaultDate)
+                }
+            }
+        }
+    }, [defaultDate]);
 
     const today = new Date();
     const disabledDays = { before: today };
