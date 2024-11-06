@@ -18,7 +18,8 @@ interface BikeImageProps extends BoxProps {
 export const Container = styled(Card)<CardProps>(({ theme }) => ({
   borderColor: theme.palette.grey[500],
   padding: 18,
-  width: 400,
+  minWidth: 200,
+  // width: 400,
 
   '&:hover': {
     cursor: 'pointer',

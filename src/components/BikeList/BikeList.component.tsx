@@ -1,14 +1,16 @@
 import Bike from 'models/Bike'
 import { getQuantityLabel } from './BikeList.utils'
 import BikeCard from 'components/BikeCard'
+import BikeCardSkeleton from 'components/BikeCard/BikeCard.skeleton'
 import { Container, ListContainer, QuantityContainer } from './BikeList.styles'
 import { Typography } from '@mui/material'
 
 interface BikeListProps {
-  bikes: Bike[]
+  bikes: Bike[];
+  isLoadingBikes?: boolean;
 }
 
-const BikeList = ({ bikes }: BikeListProps) => {
+const BikeList = ({ bikes, isLoadingBikes }: BikeListProps) => {
   const quantityLabel = getQuantityLabel(bikes.length)
 
   return (
@@ -20,9 +22,15 @@ const BikeList = ({ bikes }: BikeListProps) => {
       </QuantityContainer>
 
       <ListContainer>
-        {bikes.map((bike) => (
-          <BikeCard key={bike.id} bike={bike} />
-        ))}
+        {isLoadingBikes ? (
+          Array.from({ length: 10 }).map((_, index) => (
+            <BikeCardSkeleton key={index} />
+          ))
+        ) : (
+          bikes.map((bike) => (
+            <BikeCard key={bike.id} bike={bike} />
+          ))
+        )}
       </ListContainer>
     </Container>
   )

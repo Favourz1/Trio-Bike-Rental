@@ -75,7 +75,6 @@ const DatePicker: React.FC<DatePickerProps> = ({ isInverted = false, defaultDate
                 selected={range}
                 onSelect={(selectedDate) => {
                     if (selectedDate) {
-                        console.log('Selected Date:', selectedDate);
                         setRange(selectedDate as { from: Date; to: Date });
                     }
                     if (setExternalState) {

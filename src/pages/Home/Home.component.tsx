@@ -7,15 +7,16 @@ import ConfigErrorMessage from 'components/ConfigErrorMessage'
 interface HomeProps {
   bikes: Bike[]
   appIsNotConfigured: boolean
+  isLoadingBikes?: boolean
 }
 
-const Home = ({ bikes, appIsNotConfigured }: HomeProps) => {
+const Home = ({ bikes, appIsNotConfigured, isLoadingBikes }: HomeProps) => {
   return (
     <div data-testid='home-page'>
       <Header />
 
       <Content>
-        <BikeList bikes={bikes} />
+        <BikeList bikes={bikes} isLoadingBikes={isLoadingBikes} />
         {appIsNotConfigured && <ConfigErrorMessage />}
       </Content>
     </div>
