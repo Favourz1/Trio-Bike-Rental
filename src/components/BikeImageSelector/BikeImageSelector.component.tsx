@@ -1,6 +1,7 @@
 import BikeImageList from 'components/BikeImageList'
-import { BikeImage, Container } from './BikeImageSelector.styles'
+import { BikeImage, Circle, CircleContainer, Container } from './BikeImageSelector.styles'
 import BikePlaceholder from 'assets/bike-placeholder.png'
+import { useMediaQuery, useTheme } from '@mui/material'
 
 interface BikeImageSelectorComponentProps {
   selectedImageUrl: string
@@ -19,14 +20,18 @@ const BikeImageSelector = ({
   handleIsImageLoaded,
   handleSelectImage,
 }: BikeImageSelectorComponentProps) => {
+  const theme = useTheme()
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'))
+
   return (
     <Container data-testid='bike-image-selector'>
-      <BikeImageList
-        selectedImageUrl={selectedImageUrl}
-        selectedImageIndex={selectedImageIndex}
-        imageUrls={imageUrls}
-        handleSelectImage={handleSelectImage}
-      />
+      {!isMobileScreen &&
+        <BikeImageList
+          selectedImageUrl={selectedImageUrl}
+          selectedImageIndex={selectedImageIndex}
+          imageUrls={imageUrls}
+          handleSelectImage={handleSelectImage}
+        />}
 
       {!isImageLoaded && (
         <img
@@ -41,13 +46,25 @@ const BikeImageSelector = ({
         isLoaded={isImageLoaded}
         key={selectedImageUrl}
         src={selectedImageUrl}
-        width='100%'
+        width={'100%'}
         height='100%'
         alt="Bigger bike's image"
         data-testid='bike-selected-image'
         onLoadStart={() => handleIsImageLoaded(false)}
         onLoad={() => handleIsImageLoaded(true)}
       />
+
+      {isMobileScreen && (
+        <CircleContainer>
+          {imageUrls.map((_, index) => (
+            <Circle
+              key={index}
+              isSelected={index === selectedImageIndex}
+              onClick={() => handleSelectImage(imageUrls[index], index)}
+            />
+          ))}
+        </CircleContainer>
+      )}
     </Container>
   )
 }
