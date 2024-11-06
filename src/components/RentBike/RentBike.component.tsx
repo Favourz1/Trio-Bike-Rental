@@ -103,7 +103,7 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
     }, [selectedDate, bike, getBikeAmount]);
 
     return (
-        <OverviewContainer variant='outlined' data-testid='bike-overview-container'>
+        <OverviewContainer variant='outlined' data-testid='rentbike-overview-container'>
             {
                 !showBikeBookedPage ? <>
                     <DatePickerWrapper>
@@ -178,7 +178,7 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
                                                         disableElevation
                                                         variant='contained'
                                                         color='secondary'
-                                                        data-testid='bike-booking-button'
+                                                        data-testid='drawer-select-date-button'
                                                         sx={{ color: 'black', marginTop: 0 }}
                                                     >
                                                         Select
@@ -201,7 +201,7 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
 
                     <Divider />
 
-                    <PriceRow marginTop={1.75} data-testid='bike-overview-single-price'>
+                    <PriceRow marginTop={1.75} data-testid='price-row-subtotal'>
                         <Box display='flex' alignItems='center'>
                             <Typography marginRight={1}>Subtotal</Typography>
                             <Tooltip title='Rental rate for selected days'>
@@ -211,7 +211,7 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
                         <Typography>{isLoadingAmount ? <CircularProgressIcon size={14} /> : amountData.rentAmount} €</Typography>
                     </PriceRow>
 
-                    <PriceRow marginTop={1.5} data-testid='bike-overview-single-price'>
+                    <PriceRow marginTop={1.5} data-testid='price-row-service-fee'>
                         <Box display='flex' alignItems='center'>
                             <Typography marginRight={1}>Service Fee</Typography>
                             <Tooltip title='Service charge for your experience.'>
@@ -222,7 +222,7 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
                         <Typography> {isLoadingAmount ? <CircularProgressIcon size={14} /> : amountData.fee} €</Typography>
                     </PriceRow>
 
-                    <PriceRow marginTop={1.75} data-testid='bike-overview-total'>
+                    <PriceRow marginTop={1.75} data-testid='price-row-total'>
                         <Typography fontWeight={800} fontSize={16}>
                             Total
                         </Typography>
@@ -235,7 +235,7 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
                         fullWidth
                         disableElevation
                         variant='contained'
-                        data-testid='bike-booking-button'
+                        data-testid='booking-button'
                         disabled={isBookingBike}
                         onClick={handleBikeRental}
                     >
