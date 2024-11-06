@@ -26,6 +26,7 @@ const BikeDetailsMobileDrawer: React.FC<BikeDetailsMobileDrawerProps> = ({ bike,
 
     const PAGES = React.useMemo(() => ({
         'overview': <BikeDetailsOverview
+            id={bike.id}
             imageUrls={bike.imageUrls || []}
             bodySize={bike.bodySize || 0}
             maxLoad={bike.maxLoad || 0}

@@ -19,6 +19,7 @@ import InfoOutlined from '@mui/icons-material/InfoOutlined'
 import LocationOnOutlined from '@mui/icons-material/LocationOnOutlined'
 import Menu from '@mui/icons-material/Menu'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 
 
 export const BreadcrumbContainer = styled(Box)<BoxProps>(({ theme }) => ({
@@ -76,6 +77,11 @@ export const LikeButton = styled(IconButton)<IconButtonProps>(({ theme }) => ({
 export const FavoriteIcon = styled(FavoriteBorderOutlined)(({ theme }) => ({
     color: theme.palette.common.black,
 }))
+
+export const FavoriteFilledIcon = styled(FavoriteOutlinedIcon)(({ theme }) => ({
+    color: theme.palette.primary.main,
+}))
+
 export const CaretLeftIcon = styled(KeyboardArrowLeftIcon)(({ theme }) => ({
     color: theme.palette.common.black,
 }))

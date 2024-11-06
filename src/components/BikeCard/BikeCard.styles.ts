@@ -10,6 +10,7 @@ import {
   TypographyProps,
 } from '@mui/material'
 import { FavoriteBorderOutlined } from '@mui/icons-material'
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 
 interface BikeImageProps extends BoxProps {
   isLoaded: boolean
@@ -44,6 +45,10 @@ export const Header = styled(CardHeader)<CardHeaderProps>(() => ({
 
 export const FavoriteIcon = styled(FavoriteBorderOutlined)(({ theme }) => ({
   color: theme.palette.common.black,
+}))
+
+export const FavoriteFilledIcon = styled(FavoriteOutlinedIcon)(({ theme }) => ({
+  color: theme.palette.primary.main,
 }))
 
 export const ImageContainer = styled(Box)<BoxProps>(() => ({

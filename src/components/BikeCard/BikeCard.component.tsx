@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Divider, IconButton, Typography } from '@mui/material'
 import BikeType from 'components/BikeType'
 import BikePlaceholder from 'assets/bike-placeholder.png'
@@ -11,7 +12,9 @@ import {
   ImageContainer,
   FavoriteIcon,
   BikeImage,
+  FavoriteFilledIcon,
 } from './BikeCard.styles'
+import { addFavourite, isFavourite, removeFavourite } from 'utils/favourites'
 
 type JustDisplayedBikeData = Omit<Bike, 'candidateId' | 'maxLoad' | 'ratings'>
 
@@ -23,6 +26,7 @@ interface BikeCardComponentProps extends JustDisplayedBikeData {
 }
 
 const BikeCard = ({
+  id,
   isImageLoaded,
   name,
   cardImage,
@@ -31,11 +35,27 @@ const BikeCard = ({
   handleOpenBikeDetails,
   handleIsImageLoaded,
 }: BikeCardComponentProps) => {
+
+  const [isFav, setIsFav] = useState(isFavourite(id));
+
+  useEffect(() => {
+    setIsFav(isFavourite(id));
+  }, [id]);
+
+  const handleFavouriteClick = () => {
+    if (isFav) {
+      removeFavourite(id);
+    } else {
+      addFavourite(id);
+    }
+    setIsFav(!isFav);
+  };
+
   const LikeButton = (
-    <IconButton>
-      <FavoriteIcon />
+    <IconButton onClick={handleFavouriteClick}>
+      {isFav ? <FavoriteFilledIcon /> : <FavoriteIcon />}
     </IconButton>
-  )
+  );
 
 
   return (

@@ -13,6 +13,7 @@ import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined'
 import ChevronRightOutlined from '@mui/icons-material/ChevronRightOutlined'
 import HomeOutlined from '@mui/icons-material/HomeOutlined'
 import InfoOutlined from '@mui/icons-material/InfoOutlined'
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 
 export const BreadcrumbContainer = styled(Box)<BoxProps>(({ theme }) => ({
   position: 'relative',
@@ -66,6 +67,9 @@ export const LikeButton = styled(IconButton)<IconButtonProps>(({ theme }) => ({
 
 export const FavoriteIcon = styled(FavoriteBorderOutlined)(({ theme }) => ({
   color: theme.palette.common.black,
+}))
+export const FavoriteFilledIcon = styled(FavoriteOutlinedIcon)(({ theme }) => ({
+  color: theme.palette.primary.main,
 }))
 
 export const InfoIcon = styled(InfoOutlined)(({ theme }) => ({

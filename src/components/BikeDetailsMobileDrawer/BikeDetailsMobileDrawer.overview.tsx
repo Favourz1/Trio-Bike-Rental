@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Divider, Typography, useTheme } from '@mui/material'
 import { Drawer } from 'vaul'
 import BikeImageSelector from 'components/BikeImageSelector'
 import BikeSpecs from 'components/BikeSpecs'
 import BikeType from 'components/BikeType'
-import { BookingButton, FavoriteIcon, LikeButton, PriceRow } from './BikeDetailsMobileDrawer.styles'
+import { BookingButton, FavoriteFilledIcon, FavoriteIcon, LikeButton, PriceRow } from './BikeDetailsMobileDrawer.styles'
 import BookingAddressMap from 'components/BookingAddressMap'
 import { SetActivePage } from './types'
+import { addFavourite, isFavourite, removeFavourite } from 'utils/favourites'
 
 interface BikeDetailsOverviewProps {
+    id: number;
     imageUrls: string[];
     bodySize: number;
     maxLoad: number;
@@ -22,6 +24,7 @@ interface BikeDetailsOverviewProps {
 }
 
 const BikeDetailsOverview = ({
+    id,
     imageUrls,
     bodySize,
     maxLoad,
@@ -34,6 +37,20 @@ const BikeDetailsOverview = ({
     setActivePage
 }: BikeDetailsOverviewProps) => {
     const theme = useTheme()
+    const [isFav, setIsFav] = useState(isFavourite(id));
+
+    useEffect(() => {
+        setIsFav(isFavourite(id));
+    }, [id]);
+
+    const handleFavouriteClick = () => {
+        if (isFav) {
+            removeFavourite(id);
+        } else {
+            addFavourite(id);
+        }
+        setIsFav(!isFav);
+    };
 
     return (
         <Drawer.Content
@@ -134,8 +151,8 @@ const BikeDetailsOverview = ({
 
                 {/* Rent button fixed bottom */}
                 <Box bgcolor={theme.palette.primary.main} color={'white'} padding={'1.5rem'} display="flex" alignItems="center" gap={3} position="fixed" bottom={0} width="100%" boxShadow="0 -1px 4px rgba(0, 0, 0, 0.2)">
-                    <LikeButton>
-                        <FavoriteIcon sx={{ color: 'white' }} />
+                    <LikeButton onClick={handleFavouriteClick}>
+                        {isFav ? <FavoriteFilledIcon sx={{ color: 'white' }} /> : <FavoriteIcon sx={{ color: 'white' }} />}
                     </LikeButton>
                     <BookingButton
                         fullWidth

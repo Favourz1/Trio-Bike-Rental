@@ -11,11 +11,14 @@ import {
   BreadcrumbSeparator,
   Content,
   DetailsContainer,
+  FavoriteFilledIcon,
   FavoriteIcon,
   LikeButton,
   PriceRow,
 } from './BikeDetails.styles'
 import RentBike from 'components/RentBike'
+import { useEffect, useState } from 'react'
+import { addFavourite, isFavourite, removeFavourite } from 'utils/favourites'
 
 interface BikeDetailsProps {
   bike?: Bike
@@ -25,8 +28,21 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
   const rateByDay = bike?.rate || 0
   const rateByWeek = rateByDay * 7
 
-  // const servicesFee = getServicesFee(rateByDay)
-  // const total = rateByDay + servicesFee
+  const [isFav, setIsFav] = useState(isFavourite(bike?.id || 0));
+
+  useEffect(() => {
+    setIsFav(isFavourite(bike?.id || 0));
+  }, [bike?.id]);
+
+  const handleFavouriteClick = () => {
+    if (isFav) {
+      removeFavourite(bike?.id || 0);
+    } else {
+      addFavourite(bike?.id || 0);
+    }
+    setIsFav(!isFav);
+  };
+
 
   return (
     <div data-testid='bike-details-page'>
@@ -68,8 +84,8 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
                 <BikeType type={bike?.type} />
               </div>
 
-              <LikeButton>
-                <FavoriteIcon />
+              <LikeButton onClick={handleFavouriteClick}>
+                {isFav ? <FavoriteFilledIcon /> : <FavoriteIcon />}
               </LikeButton>
             </Box>
 

@@ -2,8 +2,10 @@ import Bike from 'models/Bike'
 import { getQuantityLabel } from './BikeList.utils'
 import BikeCard from 'components/BikeCard'
 import BikeCardSkeleton from 'components/BikeCard/BikeCard.skeleton'
-import { Container, ListContainer, QuantityContainer } from './BikeList.styles'
-import { Typography } from '@mui/material'
+import { Container, FilterCancelIcon, FilterIcon, FilterIconWrapper, ListContainer, QuantityContainer } from './BikeList.styles'
+import { Tooltip, Typography } from '@mui/material'
+import { useState } from 'react'
+import { getFavourites } from 'utils/favourites'
 
 interface BikeListProps {
   bikes: Bike[];
@@ -11,7 +13,11 @@ interface BikeListProps {
 }
 
 const BikeList = ({ bikes, isLoadingBikes }: BikeListProps) => {
-  const quantityLabel = getQuantityLabel(bikes.length)
+  const [showFavourites, setShowFavourites] = useState(false);
+  const quantityLabel = getQuantityLabel(bikes.length);
+
+  const favouriteBikes = bikes.filter(bike => getFavourites().includes(bike.id));
+  const displayedBikes = showFavourites ? favouriteBikes : bikes;
 
   return (
     <Container data-testid='bikes-list'>
@@ -19,6 +25,12 @@ const BikeList = ({ bikes, isLoadingBikes }: BikeListProps) => {
         <Typography color='primary.light' data-testid='list-quantity'>
           {quantityLabel}
         </Typography>
+        <Tooltip title={showFavourites ? 'Show All Bikes' : 'Show Favorite Bikes'}>
+          <FilterIconWrapper onClick={() => setShowFavourites(!showFavourites)}>
+            {showFavourites ? <FilterCancelIcon /> : <FilterIcon />}
+          </FilterIconWrapper>
+        </Tooltip>
+
       </QuantityContainer>
 
       <ListContainer>
@@ -27,7 +39,7 @@ const BikeList = ({ bikes, isLoadingBikes }: BikeListProps) => {
             <BikeCardSkeleton key={index} />
           ))
         ) : (
-          bikes.map((bike) => (
+          displayedBikes.map((bike) => (
             <BikeCard key={bike.id} bike={bike} />
           ))
         )}
