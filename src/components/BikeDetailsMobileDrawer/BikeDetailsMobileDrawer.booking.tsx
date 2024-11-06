@@ -21,11 +21,35 @@ const BikeDetailsBooking = ({ bike, setActivePage }: BikeDetailsBookingProps) =>
     return (
         <>
             <Drawer.Content
-                className="bg-gray-100 flex flex-col mt-24 h-fit fixed bottom-0 left-0 right-0 outline-none">
-                <div className="relative pt-2 bg-white flex-1 min-h-screen max-h-screen">
-                    {/* <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 mb-8" /> */}
-                    {/* <Drawer.Title className="font-medium mb-4 text-gray-900">A controlled drawer.</Drawer.Title> */}
-                    <div className='relative p-4'>
+                aria-labelledby="bike-details-title"
+                aria-describedby="bike-details-description"
+                style={{
+                    backgroundColor: '#f3f4f6',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    marginTop: '96px',
+                    height: 'fit-content',
+                    position: 'fixed',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    outline: 'none'
+                }}>
+                <div style={{
+                    position: 'relative',
+                    paddingTop: '8px',
+                    backgroundColor: 'white',
+                    flex: 1,
+                    minHeight: '100vh',
+                    maxHeight: '100vh'
+                }}>
+                    <div style={{ display: 'none', position: 'absolute', width: '1px', height: '1px', overflow: 'hidden' }}>
+                        <Drawer.Title >Bike Details</Drawer.Title>
+                        <Drawer.Description>
+                            Detailed information about the bike, including images, specifications, and booking details.
+                        </Drawer.Description>
+                    </div>
+                    <div style={{ position: 'relative', padding: '16px' }}>
                         {/* nav */}
                         <Actions sx={{ marginBottom: '10px' }}>
                             <IconButton
@@ -84,9 +108,6 @@ const BikeDetailsBooking = ({ bike, setActivePage }: BikeDetailsBookingProps) =>
                         <RentBike bike={bike} showCalendarAsDrawer={true} showThankYouInDialog={true} />
                     </div>
                 </div>
-
-
-
             </Drawer.Content>
             <Dialog open={isNavMenuOpen} onClose={() => setIsNavMenuOpen(false)} disableEnforceFocus disableRestoreFocus>
                 <MenuModal>

@@ -22,9 +22,6 @@ import RentBikeThankYou from './RentBike.thanks'
 import BikePlaceholder from 'assets/bike-placeholder.png'
 import { Drawer } from 'vaul'
 
-
-
-
 interface RentBikeProps {
     bike?: Bike;
     showCalendarAsDrawer?: boolean;
@@ -47,7 +44,6 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
     const [isBookingBike, setIsBookingBike] = useState<boolean>(false);
     const [showBikeBookedPage, setShowBikeBookedPage] = useState<boolean>(false);
 
-
     const getBikeAmount = useCallback(debounce(async () => {
         try {
             if (!bike) return;
@@ -64,7 +60,6 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
             const errorMessage = axios.isAxiosError(error) && error.response?.data?.message
                 ? error.response.data.message
                 : 'Failed to fetch bike amount for selected date.';
-            // console.log(error);
             console.error('Error fetching bike amount:', errorMessage);
             toast.error(errorMessage);
         } finally {
@@ -92,7 +87,6 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
             const errorMessage = axios.isAxiosError(error) && error.response?.data?.message
                 ? error.response.data.message
                 : 'Failed to book bike.';
-            // console.log(error);
             console.error('Error booking bike:', errorMessage);
             toast.error(errorMessage);
         } finally {
@@ -119,22 +113,58 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
                         {
                             showCalendarAsDrawer ?
                                 <Drawer.Root>
-                                    <Drawer.Trigger >
+                                    <Drawer.Trigger>
                                         <CalendarDrawerTriggerWrapper>
                                             <CalendarMonthStyledIcon />
                                             <Typography>
                                                 From {formatDateToDDMMYY(selectedDate?.from ?? '')} to {formatDateToDDMMYY(selectedDate?.to ?? '')}
                                             </Typography>
                                         </CalendarDrawerTriggerWrapper>
-
                                     </Drawer.Trigger>
                                     <Drawer.Portal>
-                                        <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-                                        <Drawer.Content className="flex flex-col rounded-t-[30px] mt-24 h-fit fixed bottom-0 left-0 right-0 outline-none" style={{ backgroundColor: theme.palette.primary.main }}>
-                                            <div className="relative p-4 rounded-t-[30px] flex-1 min-h-max" style={{ backgroundColor: theme.palette.primary.main }}>
-                                                <div aria-hidden className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 mb-8" />
-                                                {/* <Drawer.Title className="font-medium mb-4 text-gray-900">Drawer for React.</Drawer.Title> */}
-
+                                        <Drawer.Overlay style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.4)' }} />
+                                        <Drawer.Content
+                                            aria-labelledby="bike-details-title"
+                                            aria-describedby="bike-details-description"
+                                            className='vault-drawer-content'
+                                            style={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                borderTopLeftRadius: '30px',
+                                                borderTopRightRadius: '30px',
+                                                marginTop: '24px',
+                                                height: 'fit-content',
+                                                position: 'fixed',
+                                                bottom: 0,
+                                                left: 0,
+                                                right: 0,
+                                                outline: 'none',
+                                                backgroundColor: theme.palette.primary.main
+                                            }}>
+                                            <div style={{
+                                                position: 'relative',
+                                                padding: '16px',
+                                                borderTopLeftRadius: '30px',
+                                                borderTopRightRadius: '30px',
+                                                flex: 1,
+                                                minHeight: 'max-content',
+                                                backgroundColor: theme.palette.primary.main
+                                            }}>
+                                                <div aria-hidden style={{
+                                                    margin: '0 auto',
+                                                    width: '48px',
+                                                    height: '6px',
+                                                    flexShrink: 0,
+                                                    borderRadius: '9999px',
+                                                    backgroundColor: '#D1D5DB',
+                                                    marginBottom: '32px'
+                                                }} />
+                                                <div style={{ display: 'none', position: 'absolute', width: '1px', height: '1px', overflow: 'hidden' }}>
+                                                    <Drawer.Title>Rental Period</Drawer.Title>
+                                                    <Drawer.Description>
+                                                        Select your desired rental dates to view availability and pricing.
+                                                    </Drawer.Description>
+                                                </div>
                                                 <Box marginBottom="1rem">
                                                     <DatePicker
                                                         isInverted={true}
@@ -155,7 +185,6 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
                                                     </SelectDateButton>
                                                 </Drawer.Close>
                                             </div>
-
                                         </Drawer.Content>
                                     </Drawer.Portal>
                                 </Drawer.Root>
@@ -218,7 +247,7 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
                         <Dialog open={showBikeBookedPage} onClose={handleCloseThankYouDialog}
                             disableEnforceFocus disableRestoreFocus
                         >
-                            <div className='px-8 py-6'>
+                            <div style={{ padding: '24px 32px' }}>
                                 <RentBikeThankYou
                                     name={bike?.name || ''}
                                     imageUrl={bike?.imageUrls[0] || BikePlaceholder}

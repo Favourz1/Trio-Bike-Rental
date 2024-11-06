@@ -36,11 +36,47 @@ const BikeDetailsOverview = ({
     const theme = useTheme()
 
     return (
-        <Drawer.Content className="bg-gray-100 flex flex-col rounded-t-[30px] mt-24 h-fit fixed bottom-0 left-0 right-0 outline-none">
-            <div className="relative pt-2 bg-white rounded-t-[30px] flex-1">
-                <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 mb-8" />
-                {/* <Drawer.Title className="font-medium mb-4 text-gray-900">A controlled drawer.</Drawer.Title> */}
-                <div className='relative p-4'>
+        <Drawer.Content
+            aria-labelledby="bike-details-title"
+            aria-describedby="bike-details-description"
+            style={{
+                backgroundColor: '#f3f4f6',
+                display: 'flex',
+                flexDirection: 'column',
+                borderTopLeftRadius: '30px',
+                borderTopRightRadius: '30px',
+                marginTop: '96px',
+                height: 'fit-content',
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                outline: 'none'
+            }}>
+            <div style={{
+                position: 'relative',
+                paddingTop: '8px',
+                backgroundColor: 'white',
+                borderTopLeftRadius: '30px',
+                borderTopRightRadius: '30px',
+                flex: 1
+            }}>
+                <div style={{
+                    margin: '0 auto',
+                    width: '48px',
+                    height: '6px',
+                    flexShrink: 0,
+                    borderRadius: '9999px',
+                    backgroundColor: '#d1d5db',
+                    marginBottom: '32px'
+                }} />
+                <div style={{ display: 'none', position: 'absolute', width: '1px', height: '1px', overflow: 'hidden' }}>
+                    <Drawer.Title >Bike Details</Drawer.Title>
+                    <Drawer.Description>
+                        Detailed information about the bike, including images, specifications, and booking details.
+                    </Drawer.Description>
+                </div>
+                <div style={{ position: 'relative', padding: '16px' }}>
                     {!!imageUrls && <BikeImageSelector imageUrls={imageUrls} />}
                     <Box sx={{ position: 'absolute', bottom: '-20%', left: '50%', transform: 'translateX(-50%)', minWidth: '90%' }}>
                         <BikeSpecs bodySize={bodySize} maxLoad={maxLoad} ratings={ratings} />
