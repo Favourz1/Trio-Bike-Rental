@@ -21,6 +21,9 @@ export const Container = styled(Card)<CardProps>(({ theme }) => ({
   padding: 18,
   minWidth: 200,
   // width: 400,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 
   '&:hover': {
     cursor: 'pointer',
