@@ -82,7 +82,7 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
                 dateTo: formatSelectedDate(selectedDate.to)
             })
             setShowBikeBookedPage(true)
-            toast.success(`${bike.name} has been booked`);
+            toast.success(`${bike?.name} has been booked`);
         } catch (error: unknown) {
             const errorMessage = axios.isAxiosError(error) && error.response?.data?.message
                 ? error.response.data.message
@@ -92,7 +92,7 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
         } finally {
             setIsBookingBike(false)
         }
-    }, []);
+    }, [bike, selectedDate]);
 
     const handleCloseThankYouDialog = useCallback(() => {
         setShowBikeBookedPage(false);
@@ -236,7 +236,7 @@ const RentBike = ({ bike, showCalendarAsDrawer = false, showThankYouInDialog = f
                         disableElevation
                         variant='contained'
                         data-testid='booking-button'
-                        disabled={isBookingBike}
+                        // disabled={isBookingBike}
                         onClick={handleBikeRental}
                     >
                         {isBookingBike && <CircularProgressIcon size={14} color='info' />}

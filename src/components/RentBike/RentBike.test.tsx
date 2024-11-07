@@ -2,6 +2,12 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import RentBike from './RentBike.component';
 import { mockedBike } from 'mocks/Bike';
+import { useMediaQuery } from '@mui/material';
+
+jest.mock('@mui/material', () => ({
+    ...jest.requireActual('@mui/material'),
+    useMediaQuery: jest.fn(),
+}));
 
 describe('RentBike component', () => {
     beforeEach(() => {
@@ -41,7 +47,8 @@ describe('RentBike component', () => {
         expect(totalElement).toBeInTheDocument();
     });
 
-    it('should show the thank you dialog when booking is successful', () => {
+    it('should show the thank you dialog when booking is successful on mobile', () => {
+        (useMediaQuery as jest.Mock).mockReturnValue(true); // Simulate mobile screen
         const bookingButton = screen.getByTestId('booking-button');
         fireEvent.click(bookingButton);
 

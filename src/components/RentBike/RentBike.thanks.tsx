@@ -41,7 +41,16 @@ const RentBikeThankYou = ({ name, imageUrl, type, isMobileScreen = false }: Rent
             <BikeType type={type} />
             {
                 isMobileScreen &&
-                <HomePageLink href={Paths.HOME} data-testid='bike-booking-link'>
+                <HomePageLink
+                    href={Paths.HOME}
+                    data-testid='bike-booking-link'
+                    onClick={(e) => {
+                        if (window.location.pathname === Paths.HOME) {
+                            e.preventDefault();
+                            window.location.reload();
+                        }
+                    }}
+                >
                     Go to Home Page
                 </HomePageLink>
             }
